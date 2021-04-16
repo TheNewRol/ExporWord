@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  export-word:
+    image: export-word
+    build: ./web
+    container_name: export-word
+    ports:
+      - 2912:80
+    volumes:
+      - ./html:/var/www/html
+    networks:
+      - apache-server
+
+networks:
+  apache-server:
+    driver: bridge
+    ipam:
+      driver: default
