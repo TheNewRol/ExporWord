@@ -1,19 +1,23 @@
 <?php
 
-namespace App;
+//namespace App;
 
 use \PhpOffice\PhpWord; 
 
-class GenerateFile {
+class GenerateFile extends PhpWord{  
 
-  public $nameFile;
-  
-
-  function __Construc($nameFile){
-    $this->nameFile = $nameFile;
+  /**
+   * Incializando constructor padre
+   */
+  function __construct(){
+    parent::__construct();
   }
-
-  function downloadFile($nameFile, $phpWord, $tipeFile = "Word2007"){
+  
+  /**
+   * Descargamos el archivo con los datos que exportamos
+   */
+  function save2($nameFile, $phpWord, $tipeFile = "Word2007"){
+    /*
     header("Content-Description: File Transfer");
     header('Content-Disposition: attachment; filename="' . $file . '"');
     header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
@@ -22,5 +26,6 @@ class GenerateFile {
     header('Expires: 0');
     $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
     $xmlWriter->save("php://output");
+     */
   }
 }

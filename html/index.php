@@ -1,4 +1,16 @@
 <?php
+require ("./bootstrap.php");
+use Libs\Core\Route;
+
+if(isset($_GET['controller']) && isset($_GET['action'])){
+    $action = $_GET['action'];
+    $controller = $_GET['controller'];
+}else{
+    $action = 'index';
+    $controller = "Producto";
+}
+Route::getInstance()->get($controller, $action);
+/*
 echo "<h3> Export Word </h3>";
 
 require_once 'bootstrap.php';

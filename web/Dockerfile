@@ -8,11 +8,11 @@ RUN apt-get update
 RUN apt-get install -y \
     libmcrypt-dev \
     libzip-dev \
-    zip \
+    zip \ 
 #    mysql-client libmagickwand-dev --no-install-recommends \
 #    && pecl install imagick \
     && docker-php-ext-install zip
-    && docker-php-ext-enable imagick \
+    #&& docker-php-ext-enable imagick 
 #&& docker-php-ext-install mcrypt pdo_mysql
 
 # Install Composer
