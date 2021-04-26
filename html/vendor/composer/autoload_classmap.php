@@ -8,7 +8,9 @@ $baseDir = dirname($vendorDir);
 return array(
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'Libs\\Core\\Connection' => $baseDir . '/src/libs/core/Connection.php',
     'Libs\\Core\\Controllers' => $baseDir . '/src/libs/core/Controllers.php',
+    'Libs\\Core\\EnvConfig' => $baseDir . '/src/libs/core/EnvConfig.php',
     'Libs\\Core\\Route' => $baseDir . '/src/libs/core/Route.php',
     'Libs\\Core\\Views' => $baseDir . '/src/libs/core/Views.php',
     'PHPUnit\\Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',

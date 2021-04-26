@@ -138,7 +138,9 @@ class ComposerStaticInit1bc21aec479e0d7c613f8cf153a6b699
     public static $classMap = array (
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Libs\\Core\\Connection' => __DIR__ . '/../..' . '/src/libs/core/Connection.php',
         'Libs\\Core\\Controllers' => __DIR__ . '/../..' . '/src/libs/core/Controllers.php',
+        'Libs\\Core\\EnvConfig' => __DIR__ . '/../..' . '/src/libs/core/EnvConfig.php',
         'Libs\\Core\\Route' => __DIR__ . '/../..' . '/src/libs/core/Route.php',
         'Libs\\Core\\Views' => __DIR__ . '/../..' . '/src/libs/core/Views.php',
         'PHPUnit\\Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',

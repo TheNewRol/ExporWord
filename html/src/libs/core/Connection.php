@@ -5,7 +5,7 @@
  */
 namespace Libs\Core;
 
-class Db {
+class Connection {
   /**
    * @var String
    */
@@ -36,8 +36,8 @@ class Db {
    */
   private function __construct(){
     try{
-      $dsn = "mysql:host=$this->servername; dbname=$this->database; charset=$this->charset";
-      self::$pdoInstance = new PDO($dsn, $this->username, $this->password);
+      $dsn = "mysql:host=" . config('DB_HOST') . "; dbname=" . config("DB_DATABASE") . ";";
+      self::$pdoInstance = new PDO($dsn, config('DB_USERNAME'), config('DB_PASSWORD'));
       self::$pdoInstance::setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }catch(Exception $e){
       echo "Error en la connexion <br>" . $e::getMessage();
