@@ -4,16 +4,23 @@ FROM php:7.3-apache
 RUN apt-get clean
 RUN apt-get update
 
-#Install some basic tools
+#Install packages
 RUN apt-get install -y \
     libmcrypt-dev \
     libzip-dev \
-    zip \ 
-#    mysql-client libmagickwand-dev --no-install-recommends \
-#    && pecl install imagick \
-    && docker-php-ext-install zip
-    #&& docker-php-ext-enable imagick 
-#&& docker-php-ext-install mcrypt pdo_mysql
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    zip
+#Install php extensions
+RUN docker-php-ext-configure mysqli --with-mysqli=mysqlnd && \
+    docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd && \
+    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
+    docker-php-ext-install pdo && \
+    docker-php-ext-install mysqli && \
+    docker-php-ext-install pdo_mysql && \
+    docker-php-ext-install gd && \
+    docker-php-ext-install zip && \
+    docker-php-ext-enable mysqli pdo pdo_mysql
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

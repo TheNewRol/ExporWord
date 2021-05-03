@@ -1,2 +1,3 @@
-/html/vendor
-/html/.env
+html/vendor
+html/.env
+html/composer.lock

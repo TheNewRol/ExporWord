@@ -8,6 +8,20 @@ services:
       - 2912:80
     volumes:
       - ./html:/var/www/html
+      - ./web/config/php/php.ini:/usr/local/etc/php/php.ini
+    networks:
+      - apache-server
+  
+  mysql-data:
+    image: mysql
+    container_name: mysql-data
+    environment:
+      MYSQL_USER: main
+      MYSQL_PASSWORD: main_pass
+      MYSQL_DATABASE: pim3
+      MYSQL_ROOT_PASSWORD: Timpulse02
+    ports:
+      - 3307:3306
     networks:
       - apache-server
 
