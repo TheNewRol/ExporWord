@@ -21,7 +21,7 @@ services:
       MYSQL_DATABASE: pim3
       MYSQL_ROOT_PASSWORD: Timpulse02
     ports:
-      - 3307:3306
+      - 3306:3306
     networks:
       - apache-server
 
