@@ -52,7 +52,7 @@ class Route {
             $controller = new ProductoController();
             break;
         }
-        $controller::{$action}();
+        $controller->{$action}();
       }
     }
   }

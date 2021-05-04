@@ -29,8 +29,8 @@ class EnvConfig {
    * @param String $routeEnv ruta hacia la ubicacion del archivo .env
    */
   public function __construct($routeEnv){
-    $this->dotenv = Dotenv::createImmutable($routeEnv);
-    $this->dotenv->load();
-    $this->dotenv->required($this->envRequired)->notEmpty();
+    self::$dotenv = Dotenv::createImmutable($routeEnv);
+    self::$dotenv->load();
+    self::$dotenv->required($this->envRequired)->notEmpty();
   }
 }

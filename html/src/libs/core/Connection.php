@@ -41,7 +41,7 @@ class Connection {
       $dsn = "mysql:host=" . config('DB_HOST') . ";dbname=" . config("DB_DATABASE") . ";port=" . config('DB_PORT');
       echo $dsn . "," .config('DB_USERNAME') . "," . config('DB_PASSWORD') . "<br>";
       self::$pdoInstance = new PDO($dsn, config('DB_USERNAME'), config('DB_PASSWORD'));
-      self::$pdoInstance::setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      self::$pdoInstance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }catch(PDOException $e){
       echo "Error en la connexion <br>" . $e->getMessage();
     }

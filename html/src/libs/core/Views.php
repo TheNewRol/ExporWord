@@ -18,7 +18,7 @@ class Views {
      * @param String $controller nombre del controlador
      * @param String $view nombre de la vista
      */
-    public function getView($controller, $view){
+    public static function getView($controller, $view){
         $dirView = strtolower(getNameController($controller));
         $routeView = "src/app/Views/" . $dirView . "/" . $view . ".php";
         //echo $routeView . "<br>";
