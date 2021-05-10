@@ -1,0 +1,30 @@
+FROM node:latest
+MAINTAINER TheNewRol
+LABEL authors="TheNewRol <alfredo.valle93@gmail.com>"
+ENV HOME=/usr/src/app
+
+# Agregamos un usuario
+RUN useradd --user-group --create-home --shell /bin/false app
+
+RUN mkdir $HOME
+WORKDIR $HOME
+
+# Instalamos angular cli en nuestra imágen
+RUN npm cache clean -f 
+RUN npm install -g n 
+RUN n stable
+RUN npm update -g
+
+RUN npm install -g @angular/cli && npm cache clean -f
+
+# Puerto entorno dev
+EXPOSE 4200
+# Puerto livereload
+EXPOSE 49153
+# Puerto Test
+EXPOSE 9876
+# Puerto e2e
+EXPOSE 49152
+
+CMD npm run start
+#CMD node app.js

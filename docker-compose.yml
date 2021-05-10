@@ -1,8 +1,10 @@
 version: '3.3'
 services:
-  export-word:
-    image: export-word
-    build: ./web
+  export-server:
+    image: export-word-server
+    build:
+      context: .
+      dockerfile: ./web/DockerfileServer
     container_name: export-word
     ports:
       - 2912:80
@@ -10,11 +12,27 @@ services:
       - ./html:/var/www/html
       - ./web/config/php/php.ini:/usr/local/etc/php/php.ini
     networks:
-      - apache-server
-  
-  mysql-data:
+      - network-export
+ 
+  export-front:
+    image: export-word-front
+    build:
+      context: .
+      dockerfile: ./web/DockerfileNode
+    container_name: export-word-front
+    ports:
+      - 4200:4200
+      - 49153:49153
+      - 9876:9876
+      - 49152:49152
+    volumes:
+      - ./html/src/resources:/usr/src/app
+    networks:
+      - network-export
+
+  export-data:
     image: mysql
-    container_name: mysql-data
+    container_name: export-word-data
     command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_USER: main
@@ -24,10 +42,10 @@ services:
     ports:
       - 3306:3306
     networks:
-      - apache-server
+      - network-export
 
 networks:
-  apache-server:
+  network-export:
     driver: bridge
     ipam:
       driver: default
