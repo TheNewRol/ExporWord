@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Registrando Auto Loader
+ */
 $vendorDirPath = realpath(__DIR__ . '/vendor');
 
 if (file_exists($vendorDirPath . '/autoload.php')) {

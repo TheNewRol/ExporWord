@@ -1,7 +1,19 @@
 <?php
-require ("./bootstrap.php");
+
+/**
+ * Prepara el arraque de la aplicacion, para poder deleitar a nuestros usuarios
+ */
+require (__DIR__ . "/bootstrap.php");
+
 use Libs\Core\Route;
 
+$routes = new Route();
+include ('./src/routes/api.php');
+
+$routes->resolve();
+
+
+/*
 if(isset($_GET['controller']) && isset($_GET['action'])){
     $action = $_GET['action'];
     $controller = $_GET['controller'];
@@ -10,6 +22,15 @@ if(isset($_GET['controller']) && isset($_GET['action'])){
     $controller = "Producto";
 }
 Route::getInstance()->get($controller, $action);
+ */
+
+
+
+
+
+
+
+
 /*
 echo "<h3> Export Word </h3>";
 
