@@ -21,6 +21,7 @@
     #RewriteRule ^(.*)$ api.1.0.php [L,QSA]
     #RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
     #RewriteRule ^([^./]+)/?$ S/$1.php [L]
+    php_value memory_limit 2048M
 </IfModule>
 
 

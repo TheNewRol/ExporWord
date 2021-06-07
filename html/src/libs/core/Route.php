@@ -16,13 +16,6 @@ class Route {
    * @Object Route
    */
   private static $instance;
-  /**
-   * Lista de controladores con sus metodos y funciones
-   * @var array
-   */
-  public $routeControllers = array(
-    'Producto' => ['index']
-  );
 
   public $request;
   protected $routes = [];
@@ -48,36 +41,13 @@ class Route {
       echo "Not found";
       exit;
     }
-    echo "<pre> " . var_dump($callback) . "</pre>";
+
+    if(is_array($callback)){
+      $callback[0] = new $callback[0]();
+    }
+    /*echo "<pre> patch " . $patch . "</pre>";
+    echo "<pre> method " . $method . "</pre>";
+    echo "<pre> callback " . var_dump($callback) . "</pre>";*/
     echo call_user_func($callback);
   } 
-  /**
-   * Patron de diseño singleton de la classe Route
-   * @return Object $instance devolvemos la instancia de la classe Route
-   */
-  public static function getInstance(){
-    if(!self::$instance instanceof self){
-      self::$instance = new self();
-    }
-    return self::$instance;
-  }
-  
-  /**
-   * Realizamos una llamda al controlar y a una de sus funciones
-   * @param String $controllers nombre del controlador que se va a instanciar
-   * @param String $action nombre de la funcion del controlador
-   */
-  public function get2($controller, $action) {
-    if(array_key_exists($controller, $this->routeControllers)){
-      if(in_array($action, $this->routeControllers[$controller])){
-        require_once('src/app/Controllers/' . $controller . 'Controller.php');
-        switch($controller){
-          case 'Producto':
-            $controller = new ProductoController();
-            break;
-        }
-        $controller->{$action}();
-      }
-    }
-  }
 }

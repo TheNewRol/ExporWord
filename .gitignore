@@ -1,3 +1,4 @@
 html/vendor
 html/.env
 html/composer.lock
+web/config/sql

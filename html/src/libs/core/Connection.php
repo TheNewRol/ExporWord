@@ -31,17 +31,17 @@ class Connection {
   /**
    * @var PDO
    */
-  private static $pdoInstance;
+  private static $PDOInstance;
   
   /**
    * Creando la connexion a la BD
    */
   private function __construct(){
+    
     try{
       $dsn = "mysql:host=" . config('DB_HOST') . ";dbname=" . config("DB_DATABASE") . ";port=" . config('DB_PORT');
-      echo $dsn . "," .config('DB_USERNAME') . "," . config('DB_PASSWORD') . "<br>";
-      self::$pdoInstance = new PDO($dsn, config('DB_USERNAME'), config('DB_PASSWORD'));
-      self::$pdoInstance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      self::$PDOInstance = new PDO($dsn, config('DB_USERNAME'), config('DB_PASSWORD'));
+      self::$PDOInstance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }catch(PDOException $e){
       echo "Error en la connexion <br>" . $e->getMessage();
     }
@@ -51,9 +51,16 @@ class Connection {
    * Obteniendo instacia de la connexion de la base de datos
    */
   public static function getInstance(){
-    if(!self::$pdoInstance instanceof self){
-      self::$pdoInstance = new self();
+    if(!self::$PDOInstance instanceof self){
+      //self::$pdoInstance = new self();
+      new self();
     }
-    return self::$pdoInstance;
+    return self::$PDOInstance;
+  }
+  public static function execQuery($sql){
+    $stm = self::getInstance()->prepare($sql);
+    $stm->setFetchMode(PDO::FETCH_ASSOC);
+    $stm->execute();
+    return $stm;
   }
 }

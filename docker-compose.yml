@@ -10,7 +10,8 @@ services:
       - 2912:80
     volumes:
       - ./html:/var/www/html
-      - ./web/config/php/php.ini:/usr/local/etc/php/php.ini
+      - ./web/config/server/php.ini:/usr/local/etc/php/php.ini
+      - ./web/config/server/apache2.conf:/etc/apache2/apache2.conf
     networks:
       - network-export
  
@@ -41,6 +42,8 @@ services:
       MYSQL_ROOT_PASSWORD: Timpulse02
     ports:
       - 3306:3306
+    volumes:
+      - ./web/config/sql:/docker-entrypoint-initdb.d/schema.sql:ro
     networks:
       - network-export
 

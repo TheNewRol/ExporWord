@@ -5,8 +5,9 @@
  */
 namespace App\Controllers;
 
-use Libs\Core\Views;
+use Libs\Core\Json;
 use Libs\Core\Controllers;
+
 use App\Models\Producto;
 
 class ProductoController extends Controllers {
@@ -21,6 +22,6 @@ class ProductoController extends Controllers {
    * Refirigir a la vista producto
    */
   public function index(){
-    Views::getView(get_class(), "index");
+    Json::arrayToJson(Producto::all(), 200);
   }
 }
