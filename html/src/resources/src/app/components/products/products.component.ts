@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatTableModule} from '@angular/material/table';
 
@@ -18,10 +19,25 @@ export class ProductsComponent {
   dataSource = ELEMENT_DATA ;
   columnsToDisplay = ['name', 'weight', 'symbol', 'position'];
   expandedElement: PeriodicElement | null;
+  foods: Food[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'}
+  ];
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.expandedElement = null;
+
   }
+
+  getProducts(){
+    
+  }
+}
+
+interface Food {
+  value: string;
+  viewValue: string;
 }
 
 export interface PeriodicElement {
