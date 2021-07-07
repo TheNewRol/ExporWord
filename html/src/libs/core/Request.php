@@ -26,4 +26,8 @@ class Request {
   public function getMethod(){
     return strtolower($_SERVER['REQUEST_METHOD']);
   }
+
+  public function getContentType(){ 
+    return (isset($_SERVER['CONTENT_TYPE'])) ? $_SERVER['CONTENT_TYPE'] : false;
+  }
 }

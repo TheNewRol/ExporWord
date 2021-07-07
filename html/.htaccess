@@ -24,4 +24,6 @@
     php_value memory_limit 2048M
 </IfModule>
 
-
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin "*"
+</IfModule>

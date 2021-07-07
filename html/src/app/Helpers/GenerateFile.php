@@ -1,22 +1,36 @@
 <?php
 
-//namespace App;
+namespace App\Helpers;
 
-use \PhpOffice\PhpWord; 
+use PhpOffice\PhpWord\PhpWord; 
 
 class GenerateFile extends PhpWord{  
-
+  public $section;
+  public $word;
+  public $nameFile = "Products.docx";
+  
   /**
    * Incializando constructor padre
-   */
-  function __construct(){
-    parent::__construct();
+   */ 
+  public function __construct(){
+    $this->word = parent::__construct();
+    $this->section = parent::createSection();
   }
-  
+
+  public function addContent($text, $style){
+    $this->section->addText($text, $style); 
+  }
+  public function addStyle($nameStyle, $style){
+    parent::addFontStyle($nameStyle, $style);
+  }
+  public function download(){
+    $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter(Self, 'Word2007');
+    $xmlWriter->save("php://output");
+  } 
   /**
    * Descargamos el archivo con los datos que exportamos
    */
-  function save2($nameFile, $phpWord, $tipeFile = "Word2007"){
+  public function save2($nameFile, $phpWord, $tipeFile = "Word2007"){
     /*
     header("Content-Description: File Transfer");
     header('Content-Disposition: attachment; filename="' . $file . '"');

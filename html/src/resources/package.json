@@ -7,7 +7,10 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "prod": "ng build --prod",
+    "prod-local": "ng build --prod --base-href=/Users/carlos.valle/Documents/ProyectosDocker/exportWord/html/src/resources/dist/export-word-front/",
+    "prod-server": "ng build --prod --base-href=/export/"
   },
   "private": true,
   "dependencies": {

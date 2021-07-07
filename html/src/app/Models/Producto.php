@@ -14,12 +14,13 @@ class Producto {
   public $modelo;
   public $catalogo;
   public $ano;
+  public $texto_web;
   public $texto_lirico;
   public $destacado;
   public $descripcion;
   public $especificaciones_tecnicas;
   public $autor;
-  public $premio;
+  public $premios;
   public $imagenes;
   /**
    * Inicializando el modelo Producto
@@ -30,7 +31,7 @@ class Producto {
 
   public static function all () {
     $products = array();
-    $sql = "SELECT DISTINCT p.id as 'id_producto', p.nombre as 'Nombre_Producto', mi.nombre as 'Nombre_Modelo', p.ano, pi.texto_producto as 'Texto_Lirico', pi.destacado_web, pi.texto_shop 'texto_web', pi.descripcion_web, pi.especificaciones_tecnicas, ai.de_autor, cat.nombre
+    $sql = "SELECT DISTINCT p.id AS 'id_producto', p.nombre AS 'Nombre_Producto', mi.nombre AS 'Nombre_Modelo', p.ano, pi.texto_producto AS 'Texto_Lirico', pi.destacado_web, pi.texto_shop AS 'texto_web', pi.descripcion_web, pi.especificaciones_tecnicas, ai.de_autor, cat.nombre
       FROM producto as p
       LEFT JOIN producto_idioma as pi on pi.producto_id=p.id
       LEFT join modelo as m on m.producto_id=p.id
@@ -53,13 +54,14 @@ class Producto {
 //      $prodcutObj->nombre = $sqlProduct["Nombre_Producto"];
       $productObj->modelo = $sqlProduct["Nombre_Modelo"];
       $productObj->ano = $sqlProduct["ano"];
+      $productObj->texto_web = $sqlProduct["texto_web"];
       $productObj->texto_lirico = $sqlProduct["Texto_Lirico"];
       $productObj->destacado = $sqlProduct["destacado_web"];
       $productObj->catalogo = $sqlProduct["nombre"];
       $productObj->descripcion = $sqlProduct["descripcion_web"];
       $productObj->especificaciones_tecnicas = $sqlProduct["especificaciones_tecnicas"];
       $productObj->autor = $sqlProduct["de_autor"];
-      $productObj->premio = self::getPrize($sqlProduct["id_producto"]);
+      $productObj->premios = self::getPrize($sqlProduct["id_producto"]);
       $productObj->imagenes = self::getImgProduct($sqlProduct["id_producto"]);
       array_push($products, $productObj);
     }
@@ -72,7 +74,7 @@ class Producto {
    */
   private static function getPrize ($idProducto){
     $premios = array();
-    $sql = "SELECT PrePro.id_producto, PrePro.premio, PreLang.nombre_texto, PreLang.clase_texto
+    $sql = "SELECT PrePro.id_producto, PrePro.premio, PreLang.nombre_texto, PreLang.clase_texto, PrePro.ano
       FROM premios_producto AS PrePro
       LEFT JOIN premio_idioma AS PreLang ON PreLang.premio_id = PrePro.premio
       WHERE PrePro.id_producto = " . $idProducto . " AND PreLang.idioma_id = 1";
@@ -82,7 +84,8 @@ class Producto {
 	"id_premio" => $premio["premio"],
 	"id_product" => $premio["id_producto"],
 	"nombre" => $premio["nombre_texto"],
-	"clase_texto" => $premio["clase_texto"]
+	"clase_texto" => $premio["clase_texto"],
+	"ano" => $premio["ano"]
       );
       array_push($premios, (object)$premiosArray);
     }
@@ -95,7 +98,7 @@ class Producto {
    */
   private static function getImgProduct($idProducto){
     $imagenes = array();
-    $sql = "SELECT fotos_id, productos_id, foto_original_r1, foto_original_r2, foto_original_r3, foto_original_r4, foto_original_r5, foto_original_r6 
+    $sql = "SELECT fotos_id, productos_id, id_galeria, foto_original_r1, foto_original_r2, foto_original_r3, foto_original_r4, foto_original_r5, foto_original_r6 
       FROM productos_imagenes 
       WHERE productos_id = " . $idProducto;
     $imgsProduct = Connection::execQuery($sql);
@@ -103,6 +106,7 @@ class Producto {
       
       $imgArray = array(
 	"id_img" => $img["fotos_id"],
+	"id_galeria"  => $img["id_galeria"],
 	"id_producto" => $img["productos_id"],
 	"foto_x150"   => $img["foto_original_r1"],
 	"foto_x600"   => $img["foto_original_r2"],

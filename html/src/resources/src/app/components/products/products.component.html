@@ -8,35 +8,63 @@
 </mat-form-field>
 
 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
-  <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? masterToggle() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                    [aria-label]="checkboxLabel()">
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)"
+                    [aria-label]="checkboxLabel(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns | slice:1">
+    <th mat-header-cell *matHeaderCellDef > {{column}}</th>
     <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
   </ng-container>
 
-  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <!-- Position Column -->
   <ng-container matColumnDef="expandedDetail">
-    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-      <div class="example-element-detail"
-           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length+1">
+      <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
         <div class="example-element-diagram">
-          <div class="example-element-position"> {{element.position}} </div>
-          <div class="example-element-symbol"> {{element.symbol}} </div>
-          <div class="example-element-name"> {{element.name}} </div>
-          <div class="example-element-weight"> {{element.weight}} </div>
+          <img [src]="urlImages + element.imagenes[0].foto_x150" alt="{{ element.catalogo }} - {{ element.modelo }}">          
         </div>
         <div class="example-element-description">
-          {{element.description}}
-          <span class="example-element-description-attribution"> -- Wikipedia </span>
+          <span class="example-element-symbol">{{ element.catalogo }}</span>
+          <span>{{ element.modelo }}</span>
+          <span>{{ element.autor }}</span>
+          <span>{{ element.ano }}</span>
+          <div *ngFor="let premio of element.premios">
+            <div>{{ premio.nombre }} - {{ premio.ano }}</div>
+          </div>
+          <div [innerHTML] = "element.texto_web"></div>
+          <span class="example-element-description-attribution" [innerHTML] = "element.destacado"></span>
+          <div [innerHTML] = "element.texto_lirico"></div>
         </div>
       </div>
     </td>
   </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let element; columns: displayedColumns;"
       class="example-element-row"
       [class.example-expanded-row]="expandedElement === element"
       (click)="expandedElement = expandedElement === element ? null : element">
   </tr>
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>
+
+<section>
+  <div class="example-button-container" (click)="download_file(selection.selected)">
+    <button mat-fab color="primary" aria-label="Example icon button with a delete icon">
+      <mat-icon>file_download</mat-icon>
+    </button>
+  </div>
+</section>
+<div>{{selection.selected | json}}</div>

@@ -1,12 +1,12 @@
 <?php
 use App\Controllers\ProductoController;
+header('Access-Control-Allow-Origin: *');
+
 
 $routes->get('/', function(){
     return "Hello Word";
 });
 
-$routes->get('/productos', function(){
-    return "Hello to products";
-});
+$routes->get('/productos/', [ProductoController::class, 'index']);
 
-$routes->get('/productos/export', [ProductoController::class, 'index']);
+$routes->post('/productos/download-word/', [ProductoController::class, 'downloadProducts']); 
